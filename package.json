@@ -1,0 +1,53 @@
+{
+  "name": "Logins",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.16.0",
+    "npm": "6.9.0"
+  },
+  "description": "A Simple Example using React apps",
+  "main": "./server/app.js",
+  "scripts": {
+    "buildExample1": "babel ./client/example1.jsx --presets @babel/preset-react --out-file ./hosted/exampleBundle1.js",
+    "buildExample2": "babel ./client/example2.jsx --presets @babel/preset-react --out-file ./hosted/exampleBundle2.js",
+    "buildExample3": "babel ./client/example3.jsx --presets @babel/preset-react --out-file ./hosted/exampleBundle3.js",
+    "buildExample4": "babel ./client/example4.jsx --presets @babel/preset-react --out-file ./hosted/exampleBundle4.js",
+    "buildExample5": "babel ./client/example5.jsx --presets @babel/preset-react --out-file ./hosted/exampleBundle5.js",
+    "build": "npm run buildExample1 && npm run buildExample2 && npm run buildExample3 && npm run buildExample4 && npm run buildExample5",
+    "watchExample1": "babel --watch ./client/example1.jsx --presets @babel/preset-react --out-file ./hosted/exampleBundle1.js",
+    "watchExample2": "babel --watch ./client/example2.jsx --presets @babel/preset-react --out-file ./hosted/exampleBundle2.js",
+    "watchExample3": "babel --watch ./client/example3.jsx --presets @babel/preset-react --out-file ./hosted/exampleBundle3.js",
+    "watchExample4": "babel --watch ./client/example4.jsx --presets @babel/preset-react --out-file ./hosted/exampleBundle4.js",
+    "watchExample5": "babel --watch ./client/example5.jsx --presets @babel/preset-react --out-file ./hosted/exampleBundle5.js",
+    "nodemon": "nodemon --watch ./server --watch ./hosted ./server/app.js ",
+    "start": "node ./server/app.js",
+    "pretest": "eslint ./server --fix",
+    "test": "echo \"Tests complete\""
+  },
+  "author": "Cody Van De Mark",
+  "license": "Apache 2.0",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "connect-redis": "^4.0.4",
+    "cookie-parser": "^1.4.5",
+    "csurf": "^1.11.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "helmet": "^3.21.3",
+    "mongoose": "^5.9.5",
+    "serve-favicon": "^2.5.0",
+    "underscore": "^1.9.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "nodemon": "^2.0.2"
+  }
+}
