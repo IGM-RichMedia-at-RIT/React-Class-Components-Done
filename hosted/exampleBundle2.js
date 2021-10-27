@@ -8,19 +8,21 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //Function to 'Render' for our HelloUser React Component
 
@@ -84,14 +86,18 @@ var HelloUser = /*#__PURE__*/function (_React$Component) {
   /**
     If an instance of this class is created with the JSX
   <HelloUser username={'Broden'} />
-  	Then the props field that comes in will have a username
+  
+  Then the props field that comes in will have a username
   field on it with the value Broden.
-  	Similarly, if we made an instance of this with
+  
+  Similarly, if we made an instance of this with
   <HelloUser username={'broden'} age={20} increase={someFunction} />
-  	Then the props field that comes in would have a username field
+  
+  Then the props field that comes in would have a username field
   set to the value Broden, an age field set to 20 and an increase
   field set to a reference to the function someFunction.
-  	We should always pass these props up to the parent class to register
+  
+  We should always pass these props up to the parent class to register
   them with the parent's code if we are using props.
   **/
   function HelloUser(props) {
@@ -108,31 +114,7 @@ var HelloUser = /*#__PURE__*/function (_React$Component) {
       Here we are setting the initial state based on what was passed in.
     **/
 
-    _this.state = {
-      username: props.username
-    }; //Given the scoping of React components, we need to bind each method
-    //of this class to the current scope. Otherwise, the class's scope and
-    //React's scope will not align. This is a weird quirk of using class components.
-
-    _this.handleNameChange = _this.handleNameChange.bind(_assertThisInitialized(_this));
-    return _this;
-  } //handle name change method.
-
-  /** 
-    This method updates the state based on input from the user. This keeps our state matched
-  to what is on screen. Our listener in our JSX (in the render method) will fire this code
-  to make sure our variable state matches what the physical input on the screen has. 
-  	That way, at any given time, we can use that data to make informed decisions within react,
-  such as submissions, autocomplete, previews, screen updates, etc.
-  	Given how react components work, they are controlling the state of elements on the screen,
-  so without this, there also could be some behavior that does not seem like the default HTML 
-  behavior for certain elements.
-  **/
-
-
-  _createClass(HelloUser, [{
-    key: "handleNameChange",
-    value: function handleNameChange(e) {
+    _defineProperty(_assertThisInitialized(_this), "handleNameChange", function (e) {
       //set our state's username to what the user typed in
 
       /**
@@ -144,20 +126,42 @@ var HelloUser = /*#__PURE__*/function (_React$Component) {
         as opposed to recreating/updating all of the HTML. This is what makes this so
         fast to operate. 
       **/
-      this.setState({
+      _this.setState({
         username: e.target.value
       });
-    } //Render function
+    });
+
+    _this.state = {
+      username: props.username
+    };
+    return _this;
+  } //handle name change method.
+
+  /** 
+    This method updates the state based on input from the user. This keeps our state matched
+  to what is on screen. Our listener in our JSX (in the render method) will fire this code
+  to make sure our variable state matches what the physical input on the screen has. 
+  
+  That way, at any given time, we can use that data to make informed decisions within react,
+  such as submissions, autocomplete, previews, screen updates, etc.
+  
+  Given how react components work, they are controlling the state of elements on the screen,
+  so without this, there also could be some behavior that does not seem like the default HTML 
+  behavior for certain elements.
+  **/
+
+
+  _createClass(HelloUser, [{
+    key: "render",
+    value: //Render function
 
     /**
       This is automatically called when JSX is rendered into the page. Each instance will
     trigger this. 
-    	This JSX will get converted to HTML and displayed on the page where intended. 
+    
+    This JSX will get converted to HTML and displayed on the page where intended. 
     **/
-
-  }, {
-    key: "render",
-    value: function render() {
+    function render() {
       return /*#__PURE__*/React.createElement("div", null, "Hello ", this.state.username, /*#__PURE__*/React.createElement("p", null, "Change Name:"), /*#__PURE__*/React.createElement("input", {
         type: "text",
         value: this.state.username,

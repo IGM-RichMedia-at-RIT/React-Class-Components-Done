@@ -8,19 +8,21 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //Function to 'Render' for our FriendsContainer React Component
 
@@ -80,10 +82,12 @@ var FriendsContainer = /*#__PURE__*/function (_React$Component) {
   /**
     If an instance of this class is created with the JSX
   <FriendsContainer name={'Broden'} friends={['me', 'myself']} />
-  	Then the props field that comes in will have a name
+  
+  Then the props field that comes in will have a name
   field on it with the value Broden and a friends field that is
   an array with 'me' and 'myself'
-  	We should always pass these props up to the parent class to register
+  
+  We should always pass these props up to the parent class to register
   them with the parent's code if we are using props.
   **/
   function FriendsContainer(props) {
@@ -100,32 +104,7 @@ var FriendsContainer = /*#__PURE__*/function (_React$Component) {
       Here we are setting the initial state based on what was passed in.
     **/
 
-    _this.state = {
-      name: props.name,
-      friends: props.friends
-    }; //Given the scoping of React components, we need to bind each method
-    //of this class to the current scope. Otherwise, the class's scope and
-    //React's scope will not align. This is a weird quirk of using class components.
-
-    _this.addFriendToContainer = _this.addFriendToContainer.bind(_assertThisInitialized(_this));
-    return _this;
-  } //method to add a friend to our friend list.
-
-  /** 
-    This method updates the state based on input from the user. This keeps our state matched
-  to what is on screen. Our listener in our JSX (in the render method) will fire this code
-  to make sure our variable state matches what the physical input on the screen has. 
-  	That way, at any given time, we can use that data to make informed decisions within react,
-  such as submissions, autocomplete, previews, screen updates, etc.
-  	Given how react components work, they are controlling the state of elements on the screen,
-  so without this, there also could be some behavior that does not seem like the default HTML 
-  behavior for certain elements.
-  **/
-
-
-  _createClass(FriendsContainer, [{
-    key: "addFriendToContainer",
-    value: function addFriendToContainer(friend) {
+    _defineProperty(_assertThisInitialized(_this), "addFriendToContainer", function (friend) {
       //add a friend to our friends list in the state
 
       /**
@@ -158,30 +137,56 @@ var FriendsContainer = /*#__PURE__*/function (_React$Component) {
         Changes in the array can trigger events like re-rendering and such. 
         Immutability makes this process much faster and easier.
       **/
-      this.setState({
-        friends: this.state.friends.concat([friend])
+      _this.setState({
+        friends: _this.state.friends.concat([friend])
       });
-    } //Render function
+    });
+
+    _this.state = {
+      name: props.name,
+      friends: props.friends
+    };
+    return _this;
+  } //method to add a friend to our friend list.
+
+  /** 
+    This method updates the state based on input from the user. This keeps our state matched
+  to what is on screen. Our listener in our JSX (in the render method) will fire this code
+  to make sure our variable state matches what the physical input on the screen has. 
+  
+  That way, at any given time, we can use that data to make informed decisions within react,
+  such as submissions, autocomplete, previews, screen updates, etc.
+  
+  Given how react components work, they are controlling the state of elements on the screen,
+  so without this, there also could be some behavior that does not seem like the default HTML 
+  behavior for certain elements.
+  **/
+
+
+  _createClass(FriendsContainer, [{
+    key: "render",
+    value: //Render function
 
     /**
       This is automatically called when JSX is rendered into the page. Each instance will
     trigger this. 
-    	This JSX will get converted to HTML and displayed on the page where intended. 
-    	In the event of other React Components like <AddFriend> and <ShowList>,
+    
+    This JSX will get converted to HTML and displayed on the page where intended. 
+    
+    In the event of other React Components like <AddFriend> and <ShowList>,
     those will get instances of those components, and their render functions will be 
     called to create HTML or more JSX.
-    	Notice we are passing the addFriendToContainer method from this component to the
+    
+    Notice we are passing the addFriendToContainer method from this component to the
     AddFriend component. That way the AddFriend component can call up to this component
     in order to communicate data between them. The addFriendToContainer method will
     come in as a prop to the AddFriend component and exposes functionality from this
     component. To the AddFriend component, it will be called addNew and will be in the props.
-    	Similarly, the ShowList component is receiving names as a prop. We are passing our friends
+    
+    Similarly, the ShowList component is receiving names as a prop. We are passing our friends
     array to the ShowList component as an array that it can redraw from.
     **/
-
-  }, {
-    key: "render",
-    value: function render() {
+    function render() {
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, " Name: ", this.state.name, " "), /*#__PURE__*/React.createElement(AddFriend, {
         addNew: this.addFriendToContainer,
         newFriend: ''
@@ -221,14 +226,30 @@ var AddFriend = /*#__PURE__*/function (_React$Component2) {
       Here we are setting the initial state based on what was passed in.
     **/
 
+    _defineProperty(_assertThisInitialized(_this2), "updateNewFriend", function (e) {
+      //remember that calling setState triggers a re-render if the data on screen changes
+      //It is an incremental change so it's only the stuff that actually changed.
+      _this2.setState({
+        newFriend: e.target.value
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this2), "addNewFriend", function (e) {
+      //call up to our prop function (passed in from <FriendsContainer>)
+      //in order to call its addFriendToContainer method (passed in as addNew)
+      _this2.props.addNew(_this2.state.newFriend); //clear the field on the screen so the user can type again.
+      //remember that calling setState triggers a re-render if the data on screen changes
+      //It is an incremental change so it's only the stuff that actually changed.
+
+
+      _this2.setState({
+        newFriend: ''
+      });
+    });
+
     _this2.state = {
       newFriend: props.newFriend
-    }; //Given the scoping of React components, we need to bind each method
-    //of this class to the current scope. Otherwise, the class's scope and
-    //React's scope will not align. This is a weird quirk of using class components.
-
-    _this2.updateNewFriend = _this2.updateNewFriend.bind(_assertThisInitialized(_this2));
-    _this2.addNewFriend = _this2.addNewFriend.bind(_assertThisInitialized(_this2));
+    };
     return _this2;
   } //method update our new friend name
 
@@ -236,45 +257,22 @@ var AddFriend = /*#__PURE__*/function (_React$Component2) {
     This method updates the state based on input from the user. This keeps our state matched
   to what is on screen. Our listener in our JSX (in the render method) will fire this code
   to make sure our variable state matches what the physical input on the screen has. 
-  	That way, at any given time, we can use that data to make informed decisions within react,
+  
+  That way, at any given time, we can use that data to make informed decisions within react,
   such as submissions, autocomplete, previews, screen updates, etc.
-  	Given how react components work, they are controlling the state of elements on the screen,
+  
+  Given how react components work, they are controlling the state of elements on the screen,
   so without this, there also could be some behavior that does not seem like the default HTML 
   behavior for certain elements.
   **/
 
 
   _createClass(AddFriend, [{
-    key: "updateNewFriend",
-    value: function updateNewFriend(e) {
-      //remember that calling setState triggers a re-render if the data on screen changes
-      //It is an incremental change so it's only the stuff that actually changed.
-      this.setState({
-        newFriend: e.target.value
-      });
-    } //method to add our new friend name to the friends list
-
-    /** Refer to notes for above updateNewFriend method  **/
-
-  }, {
-    key: "addNewFriend",
-    value: function addNewFriend(e) {
-      //call up to our prop function (passed in from <FriendsContainer>)
-      //in order to call its addFriendToContainer method (passed in as addNew)
-      this.props.addNew(this.state.newFriend); //clear the field on the screen so the user can type again.
-      //remember that calling setState triggers a re-render if the data on screen changes
-      //It is an incremental change so it's only the stuff that actually changed.
-
-      this.setState({
-        newFriend: ''
-      });
-    } //Method to render our JSX as HTML and attach listeners
+    key: "render",
+    value: //Method to render our JSX as HTML and attach listeners
 
     /** Refer to notes from FriendsContainer **/
-
-  }, {
-    key: "render",
-    value: function render() {
+    function render() {
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
         type: "text",
         value: this.state.newFriend,

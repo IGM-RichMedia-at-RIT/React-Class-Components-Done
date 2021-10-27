@@ -69,12 +69,7 @@ class SongContainer extends React.Component {
 	**/
     this.state = {
       songs: props.songs
-    }; 
-	
-    //Given the scoping of React components, we need to bind each method
-	//of this class to the current scope. Otherwise, the class's scope and
-	//React's scope will not align. This is a weird quirk of using class components.
-    this.loadSongsFromServer = this.loadSongsFromServer.bind(this);
+    };
 	
 	//triggering a call on creation to start downloading data from the server
 	//and re-render if needed. 
@@ -94,7 +89,7 @@ class SongContainer extends React.Component {
 	so without this, there also could be some behavior that does not seem like the default HTML 
 	behavior for certain elements.
   **/ 
-  loadSongsFromServer () {    
+  loadSongsFromServer = () => {    
     const xhr = new XMLHttpRequest(); //new ajax request
   
     //function to parse the response and set the song container's state.

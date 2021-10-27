@@ -72,11 +72,6 @@ class FriendsContainer extends React.Component {
       name: props.name,
       friends: props.friends,
     }; 
-    
-	//Given the scoping of React components, we need to bind each method
-	//of this class to the current scope. Otherwise, the class's scope and
-	//React's scope will not align. This is a weird quirk of using class components.
-    this.addFriendToContainer = this.addFriendToContainer.bind(this);
   }
  
   //method to add a friend to our friend list.
@@ -92,7 +87,7 @@ class FriendsContainer extends React.Component {
 	so without this, there also could be some behavior that does not seem like the default HTML 
 	behavior for certain elements.
   **/ 
-  addFriendToContainer (friend) {    
+  addFriendToContainer = (friend) => {    
  	//add a friend to our friends list in the state
 	/**
 	  The setState method is inherited from the React Component class.
@@ -179,13 +174,6 @@ class AddFriend extends React.Component {
     this.state = {
       newFriend: props.newFriend,
     };
-    
-	    
-	//Given the scoping of React components, we need to bind each method
-	//of this class to the current scope. Otherwise, the class's scope and
-	//React's scope will not align. This is a weird quirk of using class components.
-    this.updateNewFriend = this.updateNewFriend.bind(this);
-    this.addNewFriend = this.addNewFriend.bind(this);
   }
   
   //method update our new friend name
@@ -201,7 +189,7 @@ class AddFriend extends React.Component {
 	so without this, there also could be some behavior that does not seem like the default HTML 
 	behavior for certain elements.
   **/ 
-  updateNewFriend (e) {
+  updateNewFriend = (e) => {
 	//remember that calling setState triggers a re-render if the data on screen changes
 	//It is an incremental change so it's only the stuff that actually changed.
     this.setState({ newFriend: e.target.value });
@@ -209,7 +197,7 @@ class AddFriend extends React.Component {
   
   //method to add our new friend name to the friends list
   /** Refer to notes for above updateNewFriend method  **/
-  addNewFriend (e) {
+  addNewFriend = (e) => {
 	//call up to our prop function (passed in from <FriendsContainer>)
 	//in order to call its addFriendToContainer method (passed in as addNew)
     this.props.addNew(this.state.newFriend);
