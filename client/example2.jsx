@@ -1,158 +1,73 @@
-//Function to 'Render' for our HelloUser React Component
-/**
-  We will create a React component class by extending the 
-  React Component class. This is more complicated than
-  Functional Stateless Components (FSCs) but they have
-  much better performance at the moment. 
-  
-  Each React component should have a render method
-  that will automatically be called when elements of
-  this class are created. 
+/* Be sure to read example1.jsx first before continuing on to this file.
 
-  We will set a React render method to this function.
-  A React render method will usually generate appropriate
-  HTML or JSX and return it.
-  
-  Notice the syntax of this is not valid JS, but more like HTML. 
-  
-  React has a special syntax called JSX which looks like HTML
-  but not stored as a string. 
-  
-  When React calls this, it will convert the JSX/HTML into real
-  HTML behind the scenes in a very fast way using a virtual DOM. 
-  
-  JSX is an HTML/XML like syntax in JS that also allows for
-  JS expressions such as variable names. 
-  
-  JSX let's us write the structure we want on the page, but
-  more securely (limiting injection and other security issues)
-  and easily than making our own HTML strings. 
-  
-  JSX can use JS expressions by the use of curly braces.
-  For example <p> {user.name} </p> would put the user.name
-  variable inside of a <p> tag. 
-  Similarly, <p> { user('name') } </p> would call a user function
-  with the parameter 'name' and put the return value into the <p> tag.
-  
-  JSX also let's us reference React Components. 
-  For example, if we have a React Component called CustomDiv,
-  we could create elements of that (and subsequently call their render functions)
-  inside of our JSX.
-  It might look like this
-  <div>
-    <CustomDiv />
-  </div>
-  
-  The following function is fairly simple as it
-  just generates <div> Hello World! </div> 
-  any time someone adds a <HelloUser /> tag to the page.
-**/
-//React - class Component
-// Extends the React.Component class
+   In example1 we rendered a very basic component to the screen. It was static,
+   and never changed. However, much of the power of react comes from it's dynamic
+   ability to update things on screen automatically. React supports two way data 
+   binding, meaning that as our data updates the display will also update 
+   automatically and vice versa.
+*/
+
 class HelloUser extends React.Component {
-	
-  //constructor will accept attributes from the JSX that made it
-  /**
-    If an instance of this class is created with the JSX
-	<HelloUser username={'Broden'} />
-	
-	Then the props field that comes in will have a username
-	field on it with the value Broden.
-	
-	Similarly, if we made an instance of this with
-	<HelloUser username={'broden'} age={20} increase={someFunction} />
-	
-	Then the props field that comes in would have a username field
-	set to the value Broden, an age field set to 20 and an increase
-	field set to a reference to the function someFunction.
-	
-	We should always pass these props up to the parent class to register
-	them with the parent's code if we are using props.
-  **/
-  constructor(props) {
-    super(props);
-    
-	//set our initial state. 
-	/**
-	  React component instances each hold a state for themselves. They
-	  are able to reference and change this state internally. 
-	  
-	  Here we are setting the initial state based on what was passed in.
-	**/
-    this.state = {
-      username: props.username,
-    };
-  }
-  
-  //handle name change method.
-  /** 
-    This method updates the state based on input from the user. This keeps our state matched
-	to what is on screen. Our listener in our JSX (in the render method) will fire this code
-	to make sure our variable state matches what the physical input on the screen has. 
-	
-	That way, at any given time, we can use that data to make informed decisions within react,
-	such as submissions, autocomplete, previews, screen updates, etc.
-	
-	Given how react components work, they are controlling the state of elements on the screen,
-	so without this, there also could be some behavior that does not seem like the default HTML 
-	behavior for certain elements.
-  **/
-  handleNameChange = (e) => {
-	//set our state's username to what the user typed in
-	/**
-	  The setState method is inherited from the React Component class.
-	  This state change automatically triggers a re-render of the screen
-	  to update what the user sees. 
-	  
-	  This is an incremental update so it's only updating HTML that actually changed
-	  as opposed to recreating/updating all of the HTML. This is what makes this so
-	  fast to operate. 
-	**/
-    this.setState({ username: e.target.value });
-  }
-  
-  //Render function
-  /**
-    This is automatically called when JSX is rendered into the page. Each instance will
-	trigger this. 
-	
-	This JSX will get converted to HTML and displayed on the page where intended. 
-  **/
-  render() {
-    return (
-      <div>
-        Hello {this.state.username}
-        <p>Change Name:</p>
-        <input type="text" value={this.state.username} onChange={this.handleNameChange} />
-      </div>
-    );
-  }
+
+    /* Like any class, React components can have constructors to setup their
+       initial state. React components also take in a parameter called "props",
+       which is a key-value object based on the attributes passed to the component
+       when we call ReactDOM.render() on it.
+
+       To properly set the component up, we also pass this props object to the
+       React.Component constructor (base class constructors are called super()).
+
+       The other thing we do in this constructor is setup an internal object called
+       state. State is tremendously important in React components, as it is the
+       interface for the data binding mentioned above. More on that below.
+    */
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: props.username,
+        };
+    }
+
+    /* Just like our last component, we have a render function here that returns
+       some JSX to be rendered to the screen. Note that this time we are making use
+       of variables like this.state.username. You'll also note that we are using the
+       onChange event to call our handleNameChange() function. Note that onChange is
+       a react event listener, and is different from the html onchange. So when the
+       text in the text input changes, handleNameChange() will be called.
+    */
+    render() {
+        return(
+            <div>
+                <p>Hello {this.state.username}</p>
+                <label>Change Name: </label>
+                <input type="text" value={this.state.username} onChange={this.handleNameChange} />
+            </div>
+        );
+    }
+
+    /* This event handler is called whenever our text input from above is edited. We
+       take in our event object "e" so that we have access to that event. Whenever the
+       text box is edited, we are going to use the setState() function that this component
+       inherits from React.Component. This will do two things: 1) update the state of the
+       component, and 2) flag the component to be rerendered. This means that by updating the
+       data we will automatically rerender the page as well. This is where React components
+       really become powerful, as our data and display are now directly linked in both directions.
+    */
+    handleNameChange = (e) => {
+        this.setState({ username: e.target.value });
+    }
 }
 
-//ReactDOM.render allows us to 'render' React components
-//to the page. 
-/**
-  ReactDOM.render will generate or update HTML on the page
-  very quickly with the new structure given.
+/* Like last demo, we need to kick off the process by rendering the component for the first time.
+   Keep in mind that handleNameChange and setState() will handle all future renders once this first
+   one is complete.
 
-  The first argument is the JSX to render to the page
-  and all subsequent JSX elements. The JSX will be 
-  converted into normal valid HTML. 
-
-  The second argument is where on the page to add it.
-
-  In this example, we are adding a <HelloUser /> JSX
-  tag to the app div. Since <HelloUser /> is JSX, 
-  it will get converted to HTML by calling the HelloUser
-  function. That function will give back
-  the HTML for the this element (or more JSX that will
-  also be converted to HTML).
-**/
+   Also, you will note below that we have a username='Austin' attribute on our HelloUser component.
+   Attributes like this populate the props param passed to the constructor. For example, props.username
+   would equal 'Austin' because of the code below.
+*/
 const init = () => {
-  ReactDOM.render(
-    <HelloUser username='Cody' />,
-    document.getElementById('app')
-  );
+    ReactDOM.render(<HelloUser username='Austin'/>, document.getElementById('app'));
 };
 
 window.onload = init;
