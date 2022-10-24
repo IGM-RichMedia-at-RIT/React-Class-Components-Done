@@ -1,7 +1,8 @@
 /* This demo covers React's class component syntax. Class Components are the original,
-   older syntax in React. Though there are newer, likely better ways to create components,
-   learning Class Components can give us a lot of insight into how the react ecosystem works
-   and how components are structured under the hood.
+   older syntax in React. The newer syntax (functional components) is pretty much the
+   default way to do things these days. However, Class Components give us a good view
+   into the basic lifecycle of React components. You also may see them at jobs that
+   are still using legacy code.
 */
 
 /* Our first component will simply display "hello world" to the screen. We start by creating
