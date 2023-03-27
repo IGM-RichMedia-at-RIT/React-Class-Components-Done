@@ -6,6 +6,9 @@
    and updates once the server responds.
 */
 
+const React = require('react');
+const ReactDOM = require('react-dom');
+
 class SongContainer extends React.Component {
 
     /* Our constructor will take in props, including an array of songs called songs.

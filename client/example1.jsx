@@ -5,6 +5,13 @@
    are still using legacy code.
 */
 
+/* First things first, we need to import the React and ReactDOM libraries to get access
+   to their functionality. React contains things like React.Component (which is the base
+   class component), and ReactDOM is used to actually render components to the screen.
+*/
+const React = require('react');
+const ReactDOM = require('react-dom');
+
 /* Our first component will simply display "hello world" to the screen. We start by creating
    a class that extends from the root React.Component class. We will see some features that
    we get from this class in example2 and example3.
@@ -13,6 +20,7 @@
    in-line with our javascript) to be rendered to the screen. This is the job of the render()
    function. Below we see it returning a div containing the text "Hello World!".
 */
+
 class HelloWorld extends React.Component {
     render() {
         return (

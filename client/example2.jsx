@@ -7,6 +7,9 @@
    automatically and vice versa.
 */
 
+const React = require('react');
+const ReactDOM = require('react-dom');
+
 class HelloUser extends React.Component {
 
     /* Like any class, React components can have constructors to setup their
