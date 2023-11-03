@@ -38,7 +38,7 @@ module.exports = {
     },
 
     // We are using the production build mode as we did last time.
-    mode: 'production',
+    mode: 'development',
 
     /* Output defines the output files. The path shows us what folder to put them in.
        hosted in this case. The filename defines the name of the output file. By
@@ -49,5 +49,10 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'hosted'),
         filename: '[name]bundle.js',
+    },
+
+    // Prevent multiple rebundles on double/triple tap of save.
+    watchOptions: {
+        aggregateTimeout: 200,
     },
 };
