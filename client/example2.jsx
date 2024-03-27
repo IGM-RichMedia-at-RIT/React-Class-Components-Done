@@ -8,7 +8,7 @@
 */
 
 const React = require('react');
-const ReactDOM = require('react-dom');
+const { createRoot } = require('react-dom/client');
 
 class HelloUser extends React.Component {
 
@@ -70,7 +70,8 @@ class HelloUser extends React.Component {
    would equal 'Austin' because of the code below.
 */
 const init = () => {
-    ReactDOM.render(<HelloUser username='Austin'/>, document.getElementById('app'));
+    const root = createRoot(document.getElementById('app'));
+    root.render( <HelloUser username='Austin'/> );
 };
 
 window.onload = init;

@@ -7,7 +7,7 @@
 */
 
 const React = require('react');
-const ReactDOM = require('react-dom');
+const { createRoot } = require('react-dom/client');
 
 class SongContainer extends React.Component {
 
@@ -76,10 +76,8 @@ class SongContainer extends React.Component {
    screen with an empty array of songs.
 */
 const init = () => {
-    ReactDOM.render(
-      <SongContainer songs={[]} />,
-      document.getElementById('app')
-    );
+    const root = createRoot(document.getElementById('app'));
+    root.render( <SongContainer songs={[]} /> );
 };
   
 window.onload = init;
